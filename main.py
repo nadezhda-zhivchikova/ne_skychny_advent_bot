@@ -34,7 +34,6 @@ logger = logging.getLogger(__name__)
 import os
 
 CODE_VERSION = "v2025-12-23-19:40-TBILI"  # любая уникальная строка
-logger.info("Python version: %s", sys.version)
 logger.info("BOOT %s | file=%s | cwd=%s", CODE_VERSION, __file__, os.getcwd())
 
 async def on_error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -332,6 +331,7 @@ def main() -> None:
     application.add_error_handler(on_error)
     
     logger.info("MAIN %s | job_queue=%r", CODE_VERSION, getattr(application, "job_queue", "NO_ATTR"))
+    logger.info("\tPython version: %s", sys.version)
 
     tz = pytz.timezone(TIMEZONE)
     if application.job_queue is None:

@@ -34,6 +34,7 @@ logger = logging.getLogger(__name__)
 import os
 
 CODE_VERSION = "v2025-12-23-19:40-TBILI"  # любая уникальная строка
+logger.info("Python version: %s", sys.version)
 logger.info("BOOT %s | file=%s | cwd=%s", CODE_VERSION, __file__, os.getcwd())
 
 async def on_error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:

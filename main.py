@@ -326,10 +326,11 @@ def build_application() -> Application:
 
 def main() -> None:
     logger.info("Starting bot...")
-    logger.info("MAIN %s | job_queue=%r", CODE_VERSION, getattr(application, "job_queue", "NO_ATTR"))
 
     application = build_application()
     application.add_error_handler(on_error)
+    
+    logger.info("MAIN %s | job_queue=%r", CODE_VERSION, getattr(application, "job_queue", "NO_ATTR"))
 
     tz = pytz.timezone(TIMEZONE)
     if application.job_queue is None:

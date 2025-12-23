@@ -31,6 +31,11 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+import os
+
+CODE_VERSION = "v2025-12-23-19:40-TBILI"  # любая уникальная строка
+logger.info("BOOT %s | file=%s | cwd=%s", CODE_VERSION, __file__, os.getcwd())
+
 async def on_error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
     logger.exception("Unhandled error while handling an update:", exc_info=context.error)
 
@@ -321,6 +326,7 @@ def build_application() -> Application:
 
 def main() -> None:
     logger.info("Starting bot...")
+    logger.info("MAIN %s | job_queue=%r", CODE_VERSION, getattr(application, "job_queue", "NO_ATTR"))
 
     application = build_application()
     application.add_error_handler(on_error)

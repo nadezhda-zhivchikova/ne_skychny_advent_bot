@@ -326,10 +326,17 @@ def main() -> None:
     application.add_error_handler(on_error)
 
     tz = pytz.timezone(TIMEZONE)
-    application.job_queue.run_daily(
-        callback=daily_broadcast_job,
-        time=time(DAILY_SEND_HOUR, 0, tzinfo=tz),
-    )
+    if application.job_queue is None:
+        logger.warning(
+            "JobQueue is not available. Install: pip install 'python-telegram-bot[job-queue]' "
+        "or add it to requirements.txt."
+        )
+    else:
+        application.job_queue.run_daily(
+            callback=daily_broadcast_job,
+            time=time(DAILY_SEND_HOUR, 0, tzinfo=tz),
+        )
+        logger.info("Daily job scheduled at %02d:00 (%s)", DAILY_SEND_HOUR, TIMEZONE)
 
     # ВАЖНО: если раньше был webhook — удаляем, иначе polling может молчать
     application.run_polling(
@@ -337,6 +344,9 @@ def main() -> None:
         drop_pending_updates=True,
         close_loop=False,
     )
+
+    tz = pytz.timezone(TIMEZONE)
+
 
 if __name__ == "__main__":
     main()

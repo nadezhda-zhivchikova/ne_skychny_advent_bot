@@ -23,7 +23,7 @@ from storage import (
     delete_advent_day,
 )
 
-import os
+import os, sys
 import logging
 
 logging.basicConfig(
